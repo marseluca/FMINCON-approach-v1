@@ -1,0 +1,25 @@
+function collisions = pp_checkCollisionForOneRobot(trajectories,threshold,i)
+    
+    collisions = [];
+    global nRobots;
+    
+    for j=1:nRobots
+        if j~=i
+            x1 = trajectories{i}.x_tot;
+            y1 = trajectories{i}.y_tot;
+            x2 = trajectories{j}.x_tot;
+            y2 = trajectories{j}.y_tot;
+
+            minLength = min(length(x1),length(x2));
+            for k = 1:minLength
+                distance = norm([x1(k),y1(k)]-[y2(k),y2(k)]);
+                
+                if distance<threshold
+                    collisions = [collisions; i j k distance];
+                end
+            end
+        end
+    end
+    
+end
+
